@@ -21,7 +21,7 @@
           </strong></span> <span class="badge bg-primary">
           {{ $row->payment->payment_method }}
         </span> <br />
-        Quantity : {{ $row->quantity }}, Total price: Rp. {{ $row->total_price }} <br />
+        Quantity : {{ $row->quantity }}, Total price: PLN. {{ $row->total_price }} <br />
         <small>
           Notes: {{ (isset($row->refusal_reason)) ? $row->refusal_reason : $row->note->order_notes }}
         </small><br>

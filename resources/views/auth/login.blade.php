@@ -51,7 +51,7 @@
                                 <hr>
 
                                 <div class="text-center">
-                                    <a class="small" href="/auth/register">Belum memiliki akun? Buat sekarang!</a>
+                                    <a class="small" href="/auth/register">No acoount? Click to Register!</a>
                                 </div>
                             </div>
                         </div>

@@ -3,9 +3,9 @@
   data-bs-keyboard="false" data-bs-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="close-modal" data-bs-dismiss="modal"><img src="{{ asset('storage/icons/close-icon.svg') }}"
+            {{-- <div class="close-modal" data-bs-dismiss="modal"><img src="{{ asset('storage/icons/close-icon.svg') }}"
                   alt="Close Modal" />
-            </div>
+            </div> --}}
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">

@@ -18,7 +18,7 @@ $("button.detail").click(function (event) {
             );
             if (res["discount"] == 0) {
                 $(".price").html(
-                    "Price: " + "<strong>Rp. " + res["price"] + "</strong>"
+                    "Price: " + "<strong>PLN. " + res["price"] + "</strong>"
                 );
                 $(".discount").html(
                     "Discount: " +

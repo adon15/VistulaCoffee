@@ -45,12 +45,12 @@
                   <label for="price">Price per pieces</label>
                   @if ($product->discount == 0)
                   <input type="hidden" id="price" name="price" data-truePrice="{{ old('price', $product->price) }}"
-                    value="Rp.
+                    value="PLN.
                 {{ old('price', $product->price) }}" type="text" class="form-control" disabled>
                   @else
                   <input type="hidden" id="price" name="price"
                     data-truePrice="{{ old('price', ((100 - $product->discount)/100) * $product->price) }}"
-                    value="Rp. {{ old('price', ((100 - $product->discount)/100) *$product->price) }}" type="text"
+                    value="PLN. {{ old('price', ((100 - $product->discount)/100) *$product->price) }}" type="text"
                     class="form-control" disabled>
                   @endif
                   <div class="input-group" style="display:unset;">
@@ -60,7 +60,7 @@
                         {{ $product->price }}
                       </span>
                       @else
-                      <span class="input-group-text">Rp. {{ ((100 - $product->discount)/100) * $product->price }} <span
+                      <span class="input-group-text">PLN. {{ ((100 - $product->discount)/100) * $product->price }} <span
                           class="strikethrough ms-4">
                           {{ $product->price }}
                         </span><sup><sub class="mx-1">of</sub>
@@ -85,25 +85,25 @@
               @enderror
             </div>
             <div class="row mb-3">
-              <div class="col-12">Destination</div>
-              <div class="form-group col-7">
+              {{-- <div class="col-12">Destination</div> --}}
+              {{-- <div class="form-group col-7">
                 <select class="form-control  @error('province') is-invalid @enderror" id="province" name="province">
                   <option value="0" selected="selected">Select Province</option>
                 </select>
                 @error('province')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
-              </div>
-              <div class="form-group col-5">
+              </div> --}}
+              {{-- <div class="form-group col-5">
                 <select class="form-control  @error('quantity') is-invalid @enderror" id="city" name="city" disabled>
                   <option value="0" selected="selected">Select City</option>
                 </select>
                 @error('city')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
-              </div>
-            </div>
-            <div class="form-group mb-3">
+              </div> --}}
+            {{-- </div> --}}
+            {{-- <div class="form-group mb-3">
               <label for="address">Address Detail</label>
               <input type="hidden" name="shipping_address" id="shipping_address">
               <input id="address" name="address" type="text" class="form-control @error('address') is-invalid @enderror"
@@ -111,11 +111,11 @@
               @error('address')
               <div class="text-danger">{{ $message }}</div>
               @enderror
-            </div>
+            </div> --}}
         </div>
 
         <!-- Online Banking -->
-        <div class="accordion-item mb-3 ">
+        {{-- <div class="accordion-item mb-3 ">
           <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
             <div class="form-check w-100 collapsed">
               <input class="form-check-input" type="radio" name="payment_method" id="online_bank"
@@ -326,9 +326,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
         {{-- COD --}}
-        <div class="accordion-item mb-3 border">
+        {{-- <div class="accordion-item mb-3 border">
           <h2 class="h5 px-4 py-3 accordion-header d-flex justify-content-between align-items-center">
             <div class="form-check w-100 collapsed">
               <input class="form-check-input" type="radio" name="payment_method" id="cod" data-bs-toggle="collapse"
@@ -354,7 +354,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
     </div>
     <!-- Right -->
@@ -371,11 +371,11 @@
           {{-- transaction resume --}}
           <div id="transaction">
             <div class="d-flex justify-content-between mb-1 small">
-              <span>Subtotal</span> <span><span>Rp. </span> <span id="sub-total">0</span></span>
+              <span>Subtotal</span> <span><span>PLN. </span> <span id="sub-total">0</span></span>
             </div>
             <div class="d-flex justify-content-between mb-1 small">
               <span>Delivery</span><span>
-                <span>Rp. </span><span id="shipping" data-shippingCost="0">0</span>
+                <span>PLN. </span><span id="shipping" data-shippingCost="0">0</span>
               </span>
             </div>
 
@@ -406,13 +406,13 @@
           </div>
           <hr>
           <div class="d-flex justify-content-between mb-4 small">
-            <span>TOTAL</span> <strong class="text-dark"><span>Rp. </span><span id="total">0</span></strong>
+            <span>TOTAL</span> <strong class="text-dark"><span>PLN. </span><span id="total">0</span></strong>
             <input type="hidden" name="total_price" id="total_price" value="{{ old('total_price', '0') }}">
           </div>
           <div class="form-group small mb-3">
             Make sure you really understand the order you make. If you want to get more information please contact <a
               class="link-danger"
-              href="https://wa.me/6281230451084?text=Saya%20ingin%20menanyakan%20detail%20terkait%20produk%20anda"
+              href="https://wa.me/?text="
               target="_blank" style="text-decoration: none;">@admin</a>
           </div>
           <button type="submit" class="btn btn-primary w-100 mt-2">Submit</button>

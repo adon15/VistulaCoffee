@@ -124,7 +124,7 @@
                 <img id="image_product_detail" width="150px">
                 <span class="d-block my-2" style="font-size: 15px;" id="product_name_detail"></span>
                 <div class="d-flex justify-content-center align-items-cetner mb-3">
-                  <div>Total Harga: Rp.</div>
+                  <div>Total Harga: PLN.</div>
                   <div style="margin-left:5px" id="total_price_detail"></div>
                 </div>
                 @if (auth()->user()->role_id == 2)

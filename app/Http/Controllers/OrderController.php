@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function makeOrderGet(Product $product)
     {
         $title = "Make Order";
-        $product = $product;
+        // $product = $Product;
 
         return view("/order/make_order", compact("title", "product"));
     }
@@ -21,28 +21,28 @@ class OrderController extends Controller
     public function makeOrderPost(Request $request, Product $product)
     {
         $rules = [
-            'address' => 'required|max:255',
-            'payment_method' => 'required|numeric',
-            'quantity' => 'required|numeric|gt:0|lte:' . $product->stock,
-            'province' => 'required|numeric|gt:0',
-            'city' => 'required|numeric|gt:0',
-            'total_price' => 'required|gt:0',
-            'shipping_address' => 'required',
-            'coupon_used' => 'required|gte:0'
+            // 'address' => 'max:255',
+            // 'payment_method' => 'numeric',
+            'quantity' => 'numeric|gt:0|lte:' . $product->stock,
+            // 'province' => '',
+            // 'city' => 'numeric|gt:0',
+            'total_price' => 'gt:0',
+            // 'shipping_address' => '',
+            // 'coupon_used' => 'gte:0'
         ];
 
 
         $message = [
-            'payment_method.required' => 'Please select the payment method',
-            'province.gt' => 'Please select the province',
-            'city.gt' => 'Please select the city',
+            // 'payment_method' => 'Please select the payment method',
+            // 'province.gt' => 'Please select the province',
+            // 'city.gt' => 'Please select the city',
             'quantity.lte' => 'sorry the current available stock is ' . $product->stock,
         ];
 
-        if ($request->payment_method == 1) {
-            $rules['bank_id'] = 'required|numeric';
-            $message['bank_id.required'] = 'Please select the bank';
-        }
+        // if ($request->payment_method == 1) {
+        //     $rules['bank_id'] = 'numeric';
+        //     $message['bank_id'] = 'Please select the bank';
+        // }
 
         $validatedData = $request->validate($rules, $message);
 
@@ -51,28 +51,30 @@ class OrderController extends Controller
                 "product_id" => $product->id,
                 "user_id" => auth()->user()->id,
                 "quantity" => $validatedData["quantity"],
-                "address" => $validatedData["address"],
-                "shipping_address" => $validatedData["shipping_address"],
+                // "address" => $validatedData["address"],
+                // "shipping_address" => $validatedData["shipping_address"],
                 "total_price" => $validatedData["total_price"],
-                "payment_id" => $validatedData["payment_method"],
-                "note_id" => ($validatedData["payment_method"] == 1) ? 2 : 1,
+                //"payment_id" => $validatedData["payment_method"],
+                //"note_id" => ($validatedData["payment_method"] == 1) ? 2 : 1,
                 "status_id" => 2,
-                "transaction_doc" => ($validatedData["payment_method"] == 1) ? env("IMAGE_PROOF") : null,
+                // "transaction_doc" => ($validatedData["payment_method"] == 1) ? env("IMAGE_PROOF") : null,
                 "is_done" => 0,
-                "coupon_used" => $validatedData["coupon_used"]
+                // "coupon_used" => $validatedData["coupon_used"]
             ];
 
-            if ($validatedData["payment_method"] == 1) {
-                $data['bank_id'] = $validatedData["bank_id"];
-            }
+            // if ($validatedData["payment_method"] == 1) {
+            //     $data['bank_id'] = $validatedData["bank_id"];
+            // }
 
             Order::create($data);
             $message = "Orders has been created!";
 
             myFlasherBuilder(message: $message, success: true);
             return redirect("/order/order_data");
-        } catch (\Illuminate\Database\QueryException $exception) {
-            return abort(500);
+        } 
+        catch (\Illuminate\Database\QueryException $exception) {
+            return redirect("/home");
+            // return abort(500);
         }
     }
 
@@ -81,9 +83,13 @@ class OrderController extends Controller
     {
         $title = "Order Data";
         if (auth()->user()->role_id == Role::ADMIN_ID) {
-            $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["is_done" => 0])->orderBy("id", "ASC")->get();
+            // $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["is_done" => 0])->orderBy("id", "ASC")->get();
+            $orders = Order::with( "note","user", "status", "product")->where(["is_done" => 0])->orderBy("id", "ASC")->get();
+
         } else {
-            $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 0])->orderBy("id", "ASC")->get();
+            // $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 0])->orderBy("id", "ASC")->get();
+            $orders = Order::with("note", "user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 0])->orderBy("id", "ASC")->get();
+
         }
         $status = Status::all();
 
@@ -95,7 +101,9 @@ class OrderController extends Controller
     public function orderDataFilter(Request $request, $status_id)
     {
         $title = "Order Data";
-        $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where("status_id", $status_id)->orderBy("id", "ASC")->get();
+        // $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where("status_id", $status_id)->orderBy("id", "ASC")->get();
+        $orders = Order::with("note", "user", "status", "product")->where("status_id", $status_id)->orderBy("id", "ASC")->get();
+
         $status = Status::all();
 
         return view("/order/order_data", compact("title", "orders", "status"));
@@ -104,7 +112,8 @@ class OrderController extends Controller
 
     public function getOrderData(Order $order)
     {
-        $order->load("product", "user", "note", "status", "bank", "payment");
+        // $order->load("product", "user", "note", "status", "bank", "payment");
+        $order->load("product", "user", "note", "status");
         return $order;
     }
 
@@ -138,19 +147,19 @@ class OrderController extends Controller
     }
 
 
-    private function couponBack(Order $order)
-    {
-        // return the user's coupon if using a coupon
-        $user = Auth::user();
+    // private function couponBack(Order $order)
+    // {
+    //     // return the user's coupon if using a coupon
+    //     $user = Auth::user();
 
-        $new_coupon = (int)$user->coupon + (int)$order->coupon_used;
+    //     $new_coupon = (int)$user->coupon + (int)$order->coupon_used;
 
-        $user->coupon = $new_coupon;
+    //     $user->coupon = $new_coupon;
 
-        if ($user->isDirty()) {
-            $user->save();
-        }
-    }
+    //     if ($user->isDirty()) {
+    //         $user->save();
+    //     }
+    // }
 
 
     public function rejectOrder(Request $request, Order $order, Product $product)
@@ -344,9 +353,11 @@ class OrderController extends Controller
     {
         $title = "History Data";
         if (auth()->user()->role_id == Role::ADMIN_ID) {
-            $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["is_done" => 1])->orderBy("id", "ASC")->get();
+            // $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["is_done" => 1])->orderBy("id", "ASC")->get();
+            $orders = Order::with("note", "user", "status", "product")->where(["is_done" => 1])->orderBy("id", "ASC")->get();
         } else {
-            $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 1])->orderBy("id", "ASC")->get();
+            // $orders = Order::with("bank", "note", "payment", "user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 1])->orderBy("id", "ASC")->get();
+            $orders = Order::with( "note","user", "status", "product")->where(["user_id" => auth()->user()->id, "is_done" => 1])->orderBy("id", "ASC")->get();
         }
         $status = Status::all();
 
@@ -364,8 +375,8 @@ class OrderController extends Controller
     public function uploadProof(Request $request, Order $order)
     {
         $validator = Validator::make($request->all(), [
-            'old_image_proof' => 'required',
-            'image_upload_proof' => 'required|image|file|max:2048',
+            'old_image_proof' => '',
+            'image_upload_proof' => 'image|file|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -404,7 +415,8 @@ class OrderController extends Controller
         }
 
         $title = "Edit Order";
-        $order->load("product", "user", "note", "status", "bank", "payment");
+        // $order->load("product", "user", "note", "status", "bank", "payment");
+        $order->load("product", "user", "note", "status",);
 
         return view("/order/edit_order", compact("title", "order"));
     }
@@ -412,19 +424,19 @@ class OrderController extends Controller
     public function editOrderPost(Request $request, Order $order)
     {
         $rules = [
-            'address' => 'required|max:255',
-            'quantity' => 'required|numeric|gt:0|lte:' . $order->product->stock,
-            'province' => 'required|numeric|gt:0',
-            'city' => 'required|numeric|gt:0',
-            'total_price' => 'required|gt:0',
-            'shipping_address' => 'required',
-            'coupon_used' => 'required|gte:0'
+            // 'address' => 'max:255',
+            'quantity' => 'numeric|gt:0|lte:' . $order->product->stock,
+            // 'province' => 'numeric|gt:0',
+            // 'city' => 'numeric|gt:0',
+            'total_price' => 'gt:0',
+            // 'shipping_address' => '',
+            // 'coupon_used' => 'gte:0'
         ];
 
 
         $message = [
-            'province.gt' => 'Please select the province',
-            'city.gt' => 'Please select the city',
+            // 'province.gt' => 'Please select the province',
+            // 'city.gt' => 'Please select the city',
             'quantity.lte' => 'sorry the current available stock is ' . $order->product->stock,
         ];
 

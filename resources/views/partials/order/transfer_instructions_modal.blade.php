@@ -116,7 +116,7 @@
                   correct, and your username is {username}. If it is correct, select OK.</li>
                 <li>Enter your m-BCA PIN and select OK.</li>
                 <li>If the notification "Transaction Failed. The nominal exceeds the daily limit”, please repeat the
-                  transaction using KlikBCA (E-Banking) or ATM. Transactions with a nominal value of more than Rp.
+                  transaction using KlikBCA (E-Banking) or ATM. Transactions with a nominal value of more than PLN.
                   20,000,000 can only be made through KlikBCA (E-Banking) or ATM.</li>
               </ol>
 

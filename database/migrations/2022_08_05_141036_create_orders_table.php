@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string("refusal_reason")->nullable();
             $table->integer("coupon_used");
             $table->timestamps();
+            $table->dropColumn(['payment_id', 'bank_id' ]);
         });
     }
 

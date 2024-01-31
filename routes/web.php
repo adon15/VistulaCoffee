@@ -90,8 +90,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Ongkir
     Route::controller(RajaOngkirController::class)->group(function () {
-        Route::get("/shipping/province", "province");
-        Route::get("/shipping/city/{province_id}", "city");
+        // Route::get("/shipping/province", "province");
+        // Route::get("/shipping/city/{province_id}", "city");
         Route::get("/shipping/cost/{origin}/{destination}/{quantity}/{courier}", "cost");
     });
 

@@ -103,47 +103,47 @@ var quantity;
 
 // ==============
 
-function getLokasi() {
-    $op = $("#province");
+// function getLokasi() {
+//     $op = $("#province");
 
-    $.getJSON("/shipping/province", function (data) {
-        $.each(data, function (i, field) {
-            $op.append(
-                '<option value="' +
-                    field.province_id +
-                    '">' +
-                    field.province +
-                    "</option>"
-            );
-        });
-    });
-}
+//     $.getJSON("/shipping/province", function (data) {
+//         $.each(data, function (i, field) {
+//             $op.append(
+//                 '<option value="' +
+//                     field.province_id +
+//                     '">' +
+//                     field.province +
+//                     "</option>"
+//             );
+//         });
+//     });
+// }
 
-getLokasi();
+// getLokasi();
 
-$("#province").on("change", function (e) {
-    e.preventDefault();
-    var option = $("option:selected", this).val();
-    $("#city option:gt(0)").remove();
-    $("#kurir").val("");
+// $("#province").on("change", function (e) {
+//     e.preventDefault();
+//     var option = $("option:selected", this).val();
+//     $("#city option:gt(0)").remove();
+//     $("#kurir").val("");
 
-    if (option === "") {
-        alert("null");
-        $("#city").prop("disabled", true);
-        $("#kurir").prop("disabled", true);
-    } else {
-        $("#city").prop("disabled", false);
-        getCity(option);
-    }
-});
+//     if (option === "") {
+//         alert("null");
+//         $("#city").prop("disabled", true);
+//         $("#kurir").prop("disabled", true);
+//     } else {
+//         $("#city").prop("disabled", false);
+//         getCity(option);
+//     }
+// });
 
-var currentCity = "0";
-$("#city").on("click", function (e) {
-    if ($(this).val() != currentCity) {
-        currentCity = $(this).val();
-        setCity();
-    }
-});
+// var currentCity = "0";
+// $("#city").on("click", function (e) {
+//     if ($(this).val() != currentCity) {
+//         currentCity = $(this).val();
+//         setCity();
+//     }
+// });
 
 function setCity() {
     product_id = $("#quantity").attr("data-productId");
@@ -157,23 +157,23 @@ function setCity() {
     });
 }
 
-function getCity(province_id) {
-    var op = $("#city");
+// function getCity(province_id) {
+//     var op = $("#city");
 
-    $.getJSON("/shipping/city/" + province_id, function (data) {
-        $.each(data, function (i, field) {
-            op.append(
-                '<option value="' +
-                    field.city_id +
-                    '">' +
-                    field.type +
-                    " " +
-                    field.city_name +
-                    "</option>"
-            );
-        });
-    });
-}
+//     $.getJSON("/shipping/city/" + province_id, function (data) {
+//         $.each(data, function (i, field) {
+//             op.append(
+//                 '<option value="' +
+//                     field.city_id +
+//                     '">' +
+//                     field.type +
+//                     " " +
+//                     field.city_name +
+//                     "</option>"
+//             );
+//         });
+//     });
+// }
 
 function setOngkir({
     origin = 42, // banyuwangi
@@ -202,13 +202,13 @@ function setOngkir({
         method: "get",
         dataType: "json",
         success: function (data) {
-            var city = $("#city option:selected");
-            var province = $("#province option:selected");
-            $("#shipping_address").val(city.html() + ", " + province.html());
+            // var city = $("#city option:selected");
+            // var province = $("#province option:selected");
+            // $("#shipping_address").val(city.html() + ", " + province.html());
             shipping = data[0]["costs"][0]["cost"][0]["value"];
             total = sub_total + shipping;
             refresh_data({
-                shipping: shipping,
+                // shipping: shipping,
                 sub_total: sub_total,
                 total: total,
             });

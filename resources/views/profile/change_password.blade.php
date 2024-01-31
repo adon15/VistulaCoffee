@@ -20,10 +20,10 @@
             <div class="panel panel-info">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-12 col-xl-4 col-sm-5 separator social-login-box"> <br>
+                        {{-- <div class="col-12 col-xl-4 col-sm-5 separator social-login-box"> <br>
                             <img alt="gambar profile user" class="img-thumbnail" src="{{ asset('storage/'    .
                               auth()->user()->image) }}">
-                        </div>
+                        </div> --}}
                         <div style="margin-top:20px;" class="col-12 col-xl-8 col-sm-7 login-box">
 
                             <form action="/profile/change_password" method="post">

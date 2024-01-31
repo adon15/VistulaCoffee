@@ -89,12 +89,12 @@
                               <label for="product_price">Price per pieces</label>
                               @if ($order->product->discount == 0)
                               <input type="hidden" id="product_price" name="product_price"
-                                data-truePrice="{{ old('price', $order->product->price) }}" value="Rp.
+                                data-truePrice="{{ old('price', $order->product->price) }}" value="PLN.
                             {{ old('price', $order->product->price) }}" type="text" class="form-control" disabled>
                               @else
                               <input type="hidden" id="product_price" name="product_price"
                                 data-truePrice="{{ old('product_price', ((100 - $order->product->discount)/100) * $order->product->price) }}"
-                                value="Rp. {{ old('product_price', ((100 - $order->product->discount)/100) *$order->product->price) }}"
+                                value="PLN. {{ old('product_price', ((100 - $order->product->discount)/100) *$order->product->price) }}"
                                 type="text" class="form-control" disabled>
                               @endif
                               <div class="input-group" style="display:unset;">
@@ -104,7 +104,7 @@
                                     {{ $order->product->price }}
                                   </span>
                                   @else
-                                  <span class="input-group-text">Rp. {{ ((100 - $order->product->discount)/100) *
+                                  <span class="input-group-text">PLN. {{ ((100 - $order->product->discount)/100) *
                                     $order->product->price }} <span class="strikethrough ms-4">
                                       {{ $order->product->price }}
                                     </span><sup><sub class="mx-1">of</sub>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="row mb-3">
                           <div class="col-12">Destination</div>
-                          <div class="form-group col-7">
+                          {{-- <div class="form-group col-7">
                             <select class="form-control @error('province') is-invalid @enderror" id="province"
                               name="province">
                               <option value="{{ old('province','0') }}" selected="selected">Select Province</option>
@@ -151,8 +151,8 @@
                             @error('province')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
-                          </div>
-                          <div class="form-group col-5">
+                          </div> --}}
+                          {{-- <div class="form-group col-5">
                             <select class="form-control @error('city') is-invalid @enderror" id="city" disabled
                               name="city">
                               <option value="{{ old('city', '0') }}" selected="selected">Select City
@@ -161,11 +161,11 @@
                             @error('city')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
-                          </div>
+                          </div> --}}
                         </div>
                         <div class="row mb-3">
                           <div class="col-12">
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                               <label for="harga">Address</label>
                               <input type="hidden" name="shipping_address" id="shipping_address">
                               <input class="form-control @error('address') is-invalid @enderror" id="address"
@@ -175,7 +175,7 @@
                               <div class="text-danger">{{ $message }}</div>
                               @enderror
                             </div>
-                          </div>
+                          </div> --}}
                         </div>
                         @if ($order->payment->payment_method == "Transfer Bank")
                         <div class="row">
@@ -238,10 +238,10 @@
           {{-- transaction resume --}}
           <div id="transaction">
             <div class="d-flex justify-content-between mb-1 small">
-              <span>Subtotal</span> <span><span>Rp. </span> <span id="sub-total">0</span></span>
+              <span>Subtotal</span> <span><span>PLN. </span> <span id="sub-total">0</span></span>
             </div>
             <div class="d-flex justify-content-between mb-1 small">
-              <span>Shipping Cost</span> <span><span>Rp. </span><span id="shipping"
+              <span>Shipping Cost</span> <span><span>PLN. </span><span id="shipping"
                   data-shippingCost="0">0</span></span>
             </div>
 
@@ -273,7 +273,7 @@
           </div>
           <hr>
           <div class="d-flex justify-content-between mb-4 small">
-            <span>TOTAL</span> <strong class="text-dark"><span>Rp. </span><span id="total">
+            <span>TOTAL</span> <strong class="text-dark"><span>PLN. </span><span id="total">
                 {{ $order->total_price }}
               </span></strong>
             <input type="hidden" name="total_price" id="total_price" value="{{$order->total_price}}">
